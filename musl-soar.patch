@@ -1,0 +1,33 @@
+diff -r -u Soar-original/Core/ConnectionSML/src/thread_OSspecific.cpp Soar/Core/ConnectionSML/src/thread_OSspecific.cpp
+--- Soar-original/Core/ConnectionSML/src/thread_OSspecific.cpp	2019-12-04 09:34:33.000000000 -0500
++++ Soar/Core/ConnectionSML/src/thread_OSspecific.cpp	2020-02-07 07:06:00.000000000 -0500
+@@ -143,7 +143,7 @@
+ 	LinuxMutex()			
+ 	{ 
+ 		pthread_mutexattr_init(&mutexattr);
+-#if (defined(__APPLE__) && defined(__MACH__)) || (__LSB_VERSION__ >= 12) || defined(__FreeBSD__)
++#if (defined(__APPLE__) && defined(__MACH__)) || (__LSB_VERSION__ >= 12) || defined(__FreeBSD__) || !defined(__GLIBC__)
+ 		pthread_mutexattr_settype(&mutexattr, PTHREAD_MUTEX_RECURSIVE);
+ #else
+ 		pthread_mutexattr_settype(&mutexattr, PTHREAD_MUTEX_RECURSIVE_NP);
+diff -r -u Soar-original/Core/shared/portability_posix.h Soar/Core/shared/portability_posix.h
+--- Soar-original/Core/shared/portability_posix.h	2019-12-04 09:34:33.000000000 -0500
++++ Soar/Core/shared/portability_posix.h	2020-02-07 06:56:40.000000000 -0500
+@@ -26,6 +26,7 @@
+ #include <dirent.h>
+ #include <regex.h>
+ #include <limits.h>
++#include <cstring>
+ 
+ #if (defined(__APPLE__) && defined(__MACH__))
+ #include <mach-o/dyld.h>
+diff -r -u Soar-original/Core/SVS/src/posix/platform_specific.cpp Soar/Core/SVS/src/posix/platform_specific.cpp
+--- Soar-original/Core/SVS/src/posix/platform_specific.cpp	2019-12-04 09:34:33.000000000 -0500
++++ Soar/Core/SVS/src/posix/platform_specific.cpp	2020-02-07 06:56:40.000000000 -0500
+@@ -8,6 +8,7 @@
+ #include <arpa/inet.h>
+ #include <ctime>
+ #include "common.h"
++#include <cstring>
+ 
+ using namespace std;

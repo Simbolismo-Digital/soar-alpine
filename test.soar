@@ -1,0 +1,7 @@
+sp {test-rule
+   (state <s> ^superstate nil)
+-->
+   (write |Hello from test.soar!|)
+};;
+
+run 1;;
